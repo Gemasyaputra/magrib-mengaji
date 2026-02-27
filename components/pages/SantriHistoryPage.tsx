@@ -136,7 +136,7 @@ export default function SantriHistoryPage({ onNavigate, santriId, mode = 'learni
         <div className="relative z-10 flex justify-between items-center">
             <div>
                 <p className={`${isWorship ? 'text-purple-100' : 'text-emerald-100'} text-xs font-medium mb-1`}>
-                    Total {isWorship ? 'Hafalan' : 'Setoran'}
+                    Total {isWorship ? 'Hafalan Doa' : 'Setoran'}
                 </p>
                 <h2 className="text-3xl font-bold">{history.length}</h2>
             </div>

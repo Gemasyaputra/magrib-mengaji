@@ -19,6 +19,14 @@ export default function ParentViewPage({ onBack, onNavigate, studentId }: Parent
     currentMonthSessions: 0,
     chartData: [] as { key: string, label: string, value: number }[] 
   });
+  const [learningProgress, setLearningProgress] = useState({
+     percentage: 0,
+     progresSaatIni: 0,
+     targetLengkap: 0,
+     labelProgress: 'Surat',
+     subTitle: 'Juz 30',
+     isIqro: false
+  });
   const [recentActivities, setRecentActivities] = useState<any[]>([]);
   const [kabarMasjid, setKabarMasjid] = useState<any[]>([]);
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -138,9 +146,31 @@ export default function ParentViewPage({ onBack, onNavigate, studentId }: Parent
             setAttendanceStats({ percentage, currentMonthPresent, currentMonthSessions, chartData });
 
             // 3. Fetch Learning Records (more limit)
-            const resLearn = await fetch(`/api/learning-records?student_id=${studentId}&limit=10`);
+            const resLearn = await fetch(`/api/learning-records?student_id=${studentId}&limit=50`);
             const jsonLearn = await resLearn.json();
             const learningRecords = (jsonLearn.success && Array.isArray(jsonLearn.data)) ? jsonLearn.data : [];
+
+            // Calculate Learning Progress Gauge Data
+            const lastRecord = learningRecords.length > 0 ? learningRecords[0] : null;
+            const isIqro = lastRecord?.type === 'IQRO';
+            
+            let targetLengkap = 37; 
+            let progresSaatIni = learningRecords.length;
+            let labelProgress = isIqro ? "Halaman" : "Surat";
+            let subTitle = isIqro ? (lastRecord.level_or_surah || "Iqro") : "Juz 30";
+
+            if (isIqro) {
+                targetLengkap = 32; 
+                const halamanTerakhir = learningRecords
+                    .filter((h: any) => h.type === 'IQRO')
+                    .map((h: any) => parseInt(h.end_point || '0'))
+                    .filter((val: number) => !isNaN(val));
+
+                progresSaatIni = halamanTerakhir.length > 0 ? Math.max(...halamanTerakhir) : 0;
+            }
+
+            const lpPercentage = targetLengkap > 0 ? Math.min(Math.round((progresSaatIni / targetLengkap) * 100), 100) : 0;
+            setLearningProgress({ percentage: lpPercentage, progresSaatIni, targetLengkap, labelProgress, subTitle, isIqro });
 
             // 4. Fetch Worship Records (more limit)
             const resWorship = await fetch(`/api/worship-records?student_id=${studentId}&limit=10`);
@@ -255,6 +285,51 @@ export default function ParentViewPage({ onBack, onNavigate, studentId }: Parent
                      Belum ada jadwal ngaji bulan ini
                 </p>
             )}
+
+            <hr className="my-5 border-slate-100" />
+
+            <div className="flex flex-col items-center">
+                <div className="w-full flex justify-between items-center mb-4">
+                    <p className="text-sm font-bold text-slate-700">Progres {learningProgress.isIqro ? 'Iqro' : 'Hafalan'}</p>
+                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">{learningProgress.subTitle}</span>
+                </div>
+                
+                {/* Circular Progress Bar */}
+                <div className="relative w-32 h-32 flex items-center justify-center mb-3">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                        {/* Background Circle */}
+                        <circle
+                            className="text-slate-100"
+                            strokeWidth="8"
+                            stroke="currentColor"
+                            fill="transparent"
+                            r={40}
+                            cx="50"
+                            cy="50"
+                        />
+                        {/* Progress Circle (Warna Hijau Terang) */}
+                        <circle
+                            className="text-emerald-500 drop-shadow-sm transition-all duration-1000 ease-out"
+                            strokeWidth="8"
+                            strokeDasharray={2 * Math.PI * 40}
+                            strokeDashoffset={(2 * Math.PI * 40) - (learningProgress.percentage / 100) * (2 * Math.PI * 40)}
+                            strokeLinecap="round"
+                            stroke="currentColor"
+                            fill="transparent"
+                            r={40}
+                            cx="50"
+                            cy="50"
+                        />
+                    </svg>
+                    <div className="absolute flex flex-col items-center justify-center">
+                        <span className="text-2xl font-bold text-emerald-600">{learningProgress.percentage}%</span>
+                    </div>
+                </div>
+                
+                <p className="text-xs text-slate-500 font-medium">
+                    <span className="text-slate-800 font-bold text-sm">{learningProgress.progresSaatIni}</span> dari <span className="text-slate-800 font-bold">{learningProgress.targetLengkap}</span> {learningProgress.labelProgress}
+                </p>
+            </div>
           </div>
         </div>
 
