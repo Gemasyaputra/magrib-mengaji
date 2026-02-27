@@ -329,12 +329,20 @@ export default function ParentViewPage({ onBack, onNavigate, studentId }: Parent
         </div>
         
         {recentActivities.length > 0 && (
-            <button 
-                onClick={() => onNavigate && onNavigate(`santri-history?id=${studentId}&mode=learning&returnPath=${encodeURIComponent(`parent-view?student_id=${studentId}`)}`)}
-                className="w-full mt-6 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 py-3 rounded-xl font-bold text-sm transition-colors border border-emerald-100 flex items-center justify-center gap-2"
-            >
-                Lihat Semua Riwayat
-            </button>
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <button 
+                    onClick={() => onNavigate && onNavigate(`santri-history?id=${studentId}&mode=learning&returnPath=${encodeURIComponent(`parent-view?student_id=${studentId}`)}`)}
+                    className="flex-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 py-3 rounded-xl font-bold text-sm transition-colors border border-emerald-100 flex items-center justify-center gap-2"
+                >
+                    Riwayat Mengaji
+                </button>
+                <button 
+                    onClick={() => onNavigate && onNavigate(`santri-history?id=${studentId}&mode=worship&returnPath=${encodeURIComponent(`parent-view?student_id=${studentId}`)}`)}
+                    className="flex-1 bg-purple-50 hover:bg-purple-100 text-purple-700 py-3 rounded-xl font-bold text-sm transition-colors border border-purple-100 flex items-center justify-center gap-2"
+                >
+                    Riwayat Hafalan
+                </button>
+            </div>
         )}
         </div>
         
