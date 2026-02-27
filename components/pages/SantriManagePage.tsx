@@ -23,7 +23,7 @@ const emptyForm = {
   birth_date: '',
   gender: '',
   address: '',
-  current_level: '',
+  current_level: 'Iqro',
 };
 
 export default function SantriManagePage({ onNavigate, onSave, currentUser }: SantriManagePageProps) {
@@ -411,16 +411,33 @@ export default function SantriManagePage({ onNavigate, onSave, currentUser }: Sa
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-xs font-semibold text-slate-600 mb-1">
+                <label className="block text-xs font-semibold text-slate-600 mb-2">
                   Level Saat Ini
                 </label>
-                <input
-                  type="text"
-                  placeholder="Contoh: Iqro 4, Juz 1"
-                  value={formData.current_level}
-                  onChange={(e) => setFormData({ ...formData, current_level: e.target.value })}
-                  className="w-full p-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-500"
-                />
+                <div className="flex bg-slate-100 p-1 rounded-lg w-full border border-slate-200">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, current_level: 'Iqro' })}
+                    className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${
+                      formData.current_level === 'Iqro' 
+                        ? 'bg-white text-emerald-600 shadow-sm' 
+                        : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
+                    }`}
+                  >
+                    Iqro
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, current_level: "Al-Qur'an" })}
+                    className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${
+                      formData.current_level === "Al-Qur'an" 
+                        ? 'bg-white text-emerald-600 shadow-sm' 
+                        : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
+                    }`}
+                  >
+                    Al-Qur'an
+                  </button>
+                </div>
               </div>
               <div className="flex gap-2 pt-2 md:col-span-2">
                 <button
