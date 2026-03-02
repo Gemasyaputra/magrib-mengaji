@@ -267,7 +267,7 @@ export default function SuperAdminDashboard({ onNavigate, currentUser }: SuperAd
   const totalGuru = mosques.reduce((sum, m) => sum + m.guru, 0);
 
   return (
-    <div className="p-4 pb-20">
+    <div className="p-4 pb-4">
       {/* Panel Header */}
       <div className="bg-slate-800 rounded-2xl p-5 text-white shadow-lg mb-4 relative overflow-hidden">
         <div className="absolute right-0 top-0 opacity-10 text-6xl -mr-4 -mt-4">

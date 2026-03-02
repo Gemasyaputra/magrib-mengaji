@@ -171,7 +171,7 @@ export default function InputIqroPage({ onSave, currentUser, onNavigate }: Input
   const handleStudentSelect = (student: Student) => {
     setSelectedStudent(student);
     const level = student.current_level?.toLowerCase() || '';
-    const isQuran = level.includes('juz') || level.includes('quran');
+    const isQuran = level.includes('juz') || level.includes('quran') || level.includes("qur'an") || level.includes('qur');
     const type = isQuran ? 'QURAN' : 'IQRO';
     
     setFormData(prev => ({

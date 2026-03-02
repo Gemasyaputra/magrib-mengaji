@@ -99,7 +99,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             <path d="M12 2C11.5 2 11 2.5 11 3v2.1A5.002 5.002 0 0 0 7 10v4H5a2 2 0 0 0-2 2v2h18v-2a2 2 0 0 0-2-2h-2v-4a5.002 5.002 0 0 0-4-4.9V3c0-.5-.5-1-1-1zm0 24c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zM9 13v-3c0-1.7 1.3-3 3-3s3 1.3 3 3v3h-6zm-4 7v-2h14v2H5z"/>
           </svg>
         </div>
-        <h1 className="text-[2.2rem] font-black mb-2 tracking-tight">TakwaApps</h1>
+        <h1 className="text-[2.2rem] font-black mb-2 tracking-tight">MagribMengaji</h1>
         <p className="text-white/90 text-sm font-medium">Aplikasi Manajemen Maghrib Mengaji</p>
       </div>
 
@@ -162,7 +162,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                </div>
             ) : (
                <>
-                  <p className="text-slate-500 text-xs mb-6">Daftarkan masjid Anda untuk mulai menggunakan TakwaApps.</p>
+                  <p className="text-slate-500 text-xs mb-6">Daftarkan masjid Anda untuk mulai menggunakan MagribMengaji.</p>
                   
                   <div className="space-y-3 mb-6 max-h-[60vh] overflow-y-auto px-1">
               <div>

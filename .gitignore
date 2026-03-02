@@ -18,3 +18,4 @@ pnpm-store/
 pnpm-debug.log*
 .pnpm-debug.log
 .env
+PRD.md

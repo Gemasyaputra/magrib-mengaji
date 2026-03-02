@@ -70,13 +70,13 @@ export async function POST(req: NextRequest) {
       // Only attempt to send actual email if credentials exist
       if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
         await transporter.sendMail({
-          from: `"TakwaApps" <${process.env.EMAIL_USER}>`,
+          from: `"MagribMengaji" <${process.env.EMAIL_USER}>`,
           to: admin_email,
-          subject: 'Verifikasi Email Admin DKM - TakwaApps',
+          subject: 'Verifikasi Email Admin DKM - MagribMengaji',
           html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
               <h2>Halo, ${admin_name}</h2>
-              <p>Terima kasih telah mendaftarkan ${mosque_name} di TakwaApps.</p>
+              <p>Terima kasih telah mendaftarkan ${mosque_name} di MagribMengaji.</p>
               <p>Silakan klik tautan di bawah ini untuk memverifikasi alamat email Anda. Setelah email terverifikasi, Super Admin akan meninjau pendaftaran masjid Anda.</p>
               <div style="margin: 30px 0;">
                 <a href="${verificationUrl}" style="background-color: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Verifikasi Email Anda</a>

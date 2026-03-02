@@ -152,7 +152,7 @@ export default function LandingPage({ onNavigate }: { onNavigate?: (page: string
               <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
                 <BookOpen className="text-white" size={18} />
               </div>
-              <span className="font-bold text-xl text-emerald-900">TakwaApps<span className="text-emerald-500">.</span></span>
+              <span className="font-bold text-xl text-emerald-900">MagribMengaji<span className="text-emerald-500">.</span></span>
             </div>
             <div className="hidden md:flex space-x-8">
               <a href="#solusi" className="text-slate-600 hover:text-emerald-600 font-medium transition-colors">Solusi</a>
@@ -707,7 +707,7 @@ export default function LandingPage({ onNavigate }: { onNavigate?: (page: string
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
            <div className="flex items-center gap-2 font-bold text-white">
              <BookOpen className="text-emerald-500" size={18} />
-             TakwaApps.
+             MagribMengaji.
            </div>
            <p>© {new Date().getFullYear()} Hak Cipta Dilindungi. Platform Digital Madrasah & Masjid.</p>
            <div className="flex gap-4">
