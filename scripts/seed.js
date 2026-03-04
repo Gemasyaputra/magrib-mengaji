@@ -2,10 +2,10 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-// Load environment variables from .env.local (Next.js style)
-require('dotenv').config({
-  path: path.resolve(__dirname, '..', '.env.local'),
-});
+const dotenv = require('dotenv');
+
+dotenv.config({ path: path.resolve(__dirname, '..', '.env.local') });
+dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
 async function runSeed() {
   const pool = new Pool({

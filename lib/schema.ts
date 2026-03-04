@@ -19,6 +19,7 @@ export const masterSurahs = pgTable("master_surahs", {
   nameArabic: varchar("name_arabic", { length: 100 }),
   totalVerses: integer("total_verses").notNull(),
   revelationType: varchar("revelation_type", { length: 20 }).notNull(),
+  juz: varchar("juz", { length: 50 }),
 });
 
 export const masterDailyPrayers = pgTable("master_daily_prayers", {

@@ -365,7 +365,7 @@ export default function ParentViewPage({ onBack, onNavigate, studentId }: Parent
         {/* Recent Activities */}
         <div>
         <h3 className="font-bold text-slate-700 text-sm mb-4 flex items-center gap-2">
-            <BookOpen size={16} className="text-emerald-500"/> Aktivitas Terkini
+            <BookOpen size={16} className="text-emerald-500"/> Buku Penghubung Digital
         </h3>
         <div className="space-y-4 border-l-2 border-slate-200 ml-2 pl-4">
             {recentActivities.length === 0 ? (

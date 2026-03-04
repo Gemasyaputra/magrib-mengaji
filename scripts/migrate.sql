@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS master_surahs (
     name_latin VARCHAR(100) NOT NULL,
     name_arabic VARCHAR(100),
     total_verses INT NOT NULL,
-    revelation_type VARCHAR(20) CHECK (revelation_type IN ('Makkiyah', 'Madaniyah'))
+    revelation_type VARCHAR(20) CHECK (revelation_type IN ('Makkiyah', 'Madaniyah')),
+    juz VARCHAR(50)
 );
 
 -- 2. Master Data Doa Harian
@@ -172,3 +173,7 @@ CREATE TABLE IF NOT EXISTS activity_images (
     caption VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- ADD JUZ COLUMN
+ALTER TABLE master_surahs ADD COLUMN IF NOT EXISTS juz VARCHAR(50);
