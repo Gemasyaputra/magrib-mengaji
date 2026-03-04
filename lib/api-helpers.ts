@@ -16,7 +16,7 @@ export async function query(text: string, params?: (string | number | boolean | 
 
 export async function queryOne(text: string, params?: (string | number | boolean | null)[]) {
   const result = await query(text, params);
-  return result.success ? result.data[0] : null;
+  return result.success && result.data ? result.data[0] : null;
 }
 
 export async function execute(text: string, params?: (string | number | boolean | null)[]) {

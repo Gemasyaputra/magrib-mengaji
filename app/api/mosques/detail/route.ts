@@ -28,8 +28,8 @@ export async function GET(req: NextRequest) {
         query(guruSql, [id])
     ]);
 
-    const santriCount = santriRes.success && santriRes.data?.length > 0 ? santriRes.data[0].count : 0;
-    const guruCount = guruRes.success && guruRes.data?.length > 0 ? guruRes.data[0].count : 0;
+    const santriCount = santriRes.success && santriRes.data && santriRes.data.length > 0 ? santriRes.data[0].count : 0;
+    const guruCount = guruRes.success && guruRes.data && guruRes.data.length > 0 ? guruRes.data[0].count : 0;
 
     return NextResponse.json({ 
         success: true, 

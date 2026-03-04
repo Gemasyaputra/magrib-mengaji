@@ -58,15 +58,15 @@ export async function GET(req: NextRequest) {
       query('SELECT name FROM mosques WHERE id = $1', [mosqueId])
     ]);
 
-    const totalSantri = totalSantriResult.success && totalSantriResult.data.length > 0 
+    const totalSantri = totalSantriResult.success && totalSantriResult.data && totalSantriResult.data.length > 0 
         ? Number(totalSantriResult.data[0].count) 
         : 0;
 
-    const presentToday = presentTodayResult.success && presentTodayResult.data.length > 0 
+    const presentToday = presentTodayResult.success && presentTodayResult.data && presentTodayResult.data.length > 0 
         ? Number(presentTodayResult.data[0].count) 
         : 0;
 
-    const mosqueName = mosqueResult.success && mosqueResult.data.length > 0
+    const mosqueName = mosqueResult.success && mosqueResult.data && mosqueResult.data.length > 0
         ? mosqueResult.data[0].name
         : 'Masjid Anda';
 

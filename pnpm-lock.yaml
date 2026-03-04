@@ -127,7 +127,7 @@ importers:
         version: 16.6.1
       drizzle-orm:
         specifier: ^0.30.10
-        version: 0.30.10(@opentelemetry/api@1.9.0)(@types/react@19.2.14)(pg@8.18.0)(react@19.2.4)
+        version: 0.30.10(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(@types/react@19.2.14)(pg@8.18.0)(react@19.2.4)
       embla-carousel-react:
         specifier: 8.6.0
         version: 8.6.0(react@19.2.4)
@@ -198,6 +198,9 @@ importers:
       '@types/nodemailer':
         specifier: ^7.0.11
         version: 7.0.11
+      '@types/pg':
+        specifier: ^8.18.0
+        version: 8.18.0
       '@types/react':
         specifier: 19.2.14
         version: 19.2.14
@@ -1600,6 +1603,9 @@ packages:
 
   '@types/nodemailer@7.0.11':
     resolution: {integrity: sha512-E+U4RzR2dKrx+u3N4DlsmLaDC6mMZOM/TPROxA0UAPiTgI0y4CEFBmZE+coGWTjakDriRsXG368lNk1u9Q0a2g==}
+
+  '@types/pg@8.18.0':
+    resolution: {integrity: sha512-gT+oueVQkqnj6ajGJXblFR4iavIXWsGAFCk3dP4Kki5+a9R4NMt0JARdk6s8cUKcfUoqP5dAtDSLU8xYUTFV+Q==}
 
   '@types/react-dom@19.2.3':
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
@@ -3766,6 +3772,12 @@ snapshots:
     dependencies:
       '@types/node': 22.19.11
 
+  '@types/pg@8.18.0':
+    dependencies:
+      '@types/node': 22.19.11
+      pg-protocol: 1.11.0
+      pg-types: 2.2.0
+
   '@types/react-dom@19.2.3(@types/react@19.2.14)':
     dependencies:
       '@types/react': 19.2.14
@@ -3968,9 +3980,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.30.10(@opentelemetry/api@1.9.0)(@types/react@19.2.14)(pg@8.18.0)(react@19.2.4):
+  drizzle-orm@0.30.10(@opentelemetry/api@1.9.0)(@types/pg@8.18.0)(@types/react@19.2.14)(pg@8.18.0)(react@19.2.4):
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
+      '@types/pg': 8.18.0
       '@types/react': 19.2.14
       pg: 8.18.0
       react: 19.2.4
