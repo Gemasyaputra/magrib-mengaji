@@ -38,7 +38,15 @@ interface User {
 */
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState<string>('landing');
+  const [currentPage, setCurrentPage] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.has('error')) {
+        return 'login';
+      }
+    }
+    return 'landing';
+  });
   const [currentRole, setCurrentRole] = useState<UserRole>(null);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [historyStack, setHistoryStack] = useState<string[]>([]);
@@ -127,16 +135,8 @@ export default function Home() {
     switch (currentPage) {
       case 'landing':
         return <LandingPage onNavigate={navigateTo} />;
-      case 'register-dkm':
-        return (
-          <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-6 text-center animate-in fade-in zoom-in duration-500">
-            <h1 className="text-3xl font-bold text-slate-800 mb-4">Halaman Registrasi Sedang Disiapkan</h1>
-            <p className="text-slate-600 mb-8 max-w-md">Fitur pendaftaran mandiri (Self-Service) untuk Admin DKM Masjid sedang dalam tahap pengembangan akhir. Silakan hubungi tim kami untuk pembuatan akun secara manual.</p>
-            <button onClick={() => navigateTo('landing')} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all">
-              Kembali ke Beranda
-            </button>
-          </div>
-        );
+      case 'register':
+        return <LoginPage onLogin={handleLogin} initialShowRegister={true} />;
       case 'login':
         return <LoginPage onLogin={handleLogin} />;
       case 'dashboard':
@@ -201,7 +201,7 @@ export default function Home() {
     }
   };
 
-  const showChrome = currentPage !== 'landing' && currentPage !== 'login' && currentPage !== 'register' && currentPage !== 'register-dkm' && !currentPage.startsWith('parent-view');
+  const showChrome = currentPage !== 'landing' && currentPage !== 'login' && currentPage !== 'register' && !currentPage.startsWith('parent-view');
 
   const getHeaderTitle = () => {
     if (currentPage === 'dashboard-superadmin') return 'Super Admin';

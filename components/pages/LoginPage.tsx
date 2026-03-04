@@ -7,10 +7,11 @@ import { User, UserRole } from '@/types';
 
 interface LoginPageProps {
   onLogin: (role: UserRole, user?: User) => void;
+  initialShowRegister?: boolean;
 }
 
-export default function LoginPage({ onLogin }: LoginPageProps) {
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
+export default function LoginPage({ onLogin, initialShowRegister = false }: LoginPageProps) {
+  const [showRegisterModal, setShowRegisterModal] = useState(initialShowRegister);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isSuccessRegistration, setIsSuccessRegistration] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);

@@ -71,6 +71,7 @@ const handler = NextAuth({
             const dbUser = await db
               .select({
                 id: users.id,
+                name: users.name, // Fetch name from our DB
                 role: users.role,
                 mosqueId: users.mosqueId,
                 mosqueName: mosques.name
@@ -82,6 +83,7 @@ const handler = NextAuth({
             
             if (dbUser.length > 0) {
                token.id = dbUser[0].id.toString();
+               token.name = dbUser[0].name; // Override Google name with DB name
                token.role = dbUser[0].role;
                token.mosqueId = dbUser[0].mosqueId?.toString();
                token.mosqueName = dbUser[0].mosqueName;
@@ -96,6 +98,7 @@ const handler = NextAuth({
       // Attach info from token to session
       if (session.user) {
         (session.user as any).id = token.id;
+        (session.user as any).name = token.name; // Apply DB name to session
         (session.user as any).role = token.role;
         (session.user as any).mosqueId = token.mosqueId;
         (session.user as any).mosqueName = token.mosqueName;

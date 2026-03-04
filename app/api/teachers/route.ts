@@ -31,7 +31,12 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, phone, mosque_id, password } = body;
+    const { 
+      name, email, phone, mosque_id, password, 
+      nik, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah,
+      alamat, rt_rw, kel_desa, kecamatan, agama, status_perkawinan,
+      pekerjaan, kewarganegaraan
+    } = body;
 
     if (!name || !email || !mosque_id) {
         return NextResponse.json({ success: false, error: 'Name, Email, and Mosque ID are required' }, { status: 400 });
@@ -47,9 +52,19 @@ export async function POST(req: NextRequest) {
     const passwordHash = password || 'teacher123'; 
 
     const result = await execute(
-        `INSERT INTO users (name, email, phone, role, mosque_id, password_hash, is_verified, created_at)
-         VALUES ($1, $2, $3, 'teacher', $4, $5, true, NOW())`,
-        [name, email, phone || null, mosque_id, passwordHash]
+        `INSERT INTO users (
+           name, email, phone, role, mosque_id, password_hash, is_verified, created_at,
+           nik, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah,
+           alamat, rt_rw, kel_desa, kecamatan, agama, status_perkawinan,
+           pekerjaan, kewarganegaraan
+         )
+         VALUES ($1, $2, $3, 'teacher', $4, $5, true, NOW(), $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`,
+        [
+          name, email, phone || null, mosque_id, passwordHash,
+          nik || null, tempat_lahir || null, tanggal_lahir || null, jenis_kelamin || null, golongan_darah || null,
+          alamat || null, rt_rw || null, kel_desa || null, kecamatan || null, agama || null, status_perkawinan || null,
+          pekerjaan || null, kewarganegaraan || null
+        ]
     );
 
     return NextResponse.json(result, { status: result.success ? 201 : 400 });
@@ -62,15 +77,30 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     try {
         const body = await req.json();
-        const { id, name, email, phone } = body;
+        const { 
+          id, name, email, phone,
+          nik, tempat_lahir, tanggal_lahir, jenis_kelamin, golongan_darah,
+          alamat, rt_rw, kel_desa, kecamatan, agama, status_perkawinan,
+          pekerjaan, kewarganegaraan 
+        } = body;
 
         if (!id) {
              return NextResponse.json({ success: false, error: 'ID required' }, { status: 400 });
         }
 
         const result = await execute(
-            `UPDATE users SET name = $1, email = $2, phone = $3 WHERE id = $4 AND role = 'teacher'`,
-            [name, email, phone, id]
+            `UPDATE users SET 
+              name = $1, email = $2, phone = $3,
+              nik = $5, tempat_lahir = $6, tanggal_lahir = $7, jenis_kelamin = $8, golongan_darah = $9,
+              alamat = $10, rt_rw = $11, kel_desa = $12, kecamatan = $13, agama = $14, status_perkawinan = $15,
+              pekerjaan = $16, kewarganegaraan = $17
+             WHERE id = $4 AND role = 'teacher'`,
+            [
+              name, email, phone, id,
+              nik || null, tempat_lahir || null, tanggal_lahir || null, jenis_kelamin || null, golongan_darah || null,
+              alamat || null, rt_rw || null, kel_desa || null, kecamatan || null, agama || null, status_perkawinan || null,
+              pekerjaan || null, kewarganegaraan || null
+            ]
         );
 
         return NextResponse.json(result);

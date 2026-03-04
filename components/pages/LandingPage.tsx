@@ -198,7 +198,7 @@ export default function LandingPage({ onNavigate }: { onNavigate?: (page: string
             
             <AnimateOnScroll animation="fade-up" delay={400} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <button 
-                onClick={() => onNavigate && onNavigate('register-dkm')}
+                onClick={() => onNavigate && onNavigate('login')}
                 className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold text-lg transition-all shadow-lg shadow-emerald-200 flex items-center justify-center gap-2 group">
                 Buat Akun Lembaga Baru
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
@@ -689,7 +689,7 @@ export default function LandingPage({ onNavigate }: { onNavigate?: (page: string
           
           <AnimateOnScroll delay={300} className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <button 
-              onClick={() => onNavigate && onNavigate('register-dkm')}
+              onClick={() => onNavigate && onNavigate('login')}
               className="w-full sm:w-auto px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-bold text-lg transition-all shadow-lg shadow-emerald-900/50">
               Daftar / Registrasi DKM
             </button>
