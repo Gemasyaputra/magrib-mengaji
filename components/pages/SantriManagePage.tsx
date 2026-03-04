@@ -323,7 +323,7 @@ export default function SantriManagePage({ onNavigate, onSave, currentUser }: Sa
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-600 mb-1">
-                  Kelompok Belajar (opsional)
+                  Kelompok Belajar
                 </label>
                 <SearchableSelect
                   options={[

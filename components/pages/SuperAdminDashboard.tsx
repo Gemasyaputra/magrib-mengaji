@@ -1,4 +1,4 @@
-'use client';
+  'use client';
 
 import { useState, useEffect } from 'react';
 import { Globe, Users, Plus, X, Trash2, Search, ChevronLeft, ChevronRight, Edit2, MoreVertical } from 'lucide-react';
