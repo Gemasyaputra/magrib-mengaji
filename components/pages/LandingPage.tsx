@@ -468,6 +468,71 @@ export default function LandingPage({ onNavigate }: { onNavigate?: (page: string
         </div>
       </section>
 
+      {/* 4.5 AI KTP UPLOAD SECTION */}
+      <section className="py-24 bg-slate-50 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            
+            <div className="flex-1 order-1">
+              <AnimateOnScroll animation="fade-right" delay={100}>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                  Otomatisasi Isi Data KTP dengan AI
+                </h2>
+                <p className="text-lg text-slate-600 mb-6">
+                  Daftar akun pengajar jadi lebih mudah dan cepat. Cukup dengan mengunggah foto KTP Anda, teknologi Kecerdasan Buatan (AI) kami akan membaca dan mengisi kolom data diri secara otomatis ke dalam form.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0">
+                      <Smartphone className="text-emerald-500" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-800">Upload Foto</h4>
+                      <p className="text-sm text-slate-600">Ambil/unggah foto KTP Anda langsung dari perangkat.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="text-blue-500" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-800">Ekstraksi Pintar</h4>
+                      <p className="text-sm text-slate-600">Sistem AI mengenali NIK, Nama, dan data lainnya.</p>
+                    </div>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
+
+            <div className="flex-1 order-2 w-full flex justify-center">
+              <AnimateOnScroll animation="fade-left" delay={200}>
+                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-8 border-slate-50 bg-slate-100 max-w-[280px] lg:max-w-[320px] mx-auto">
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    className="w-full h-auto object-cover rounded-[1.5rem]"
+                  >
+                    <source src="/video_upload_ktp_ai.mp4" type="video/mp4" />
+                    Browser Anda tidak mendukung tag video.
+                  </video>
+                  {/* Decorative element */}
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span className="text-xs font-bold text-slate-700">AI Powered</span>
+                  </div>
+                </div>
+              </AnimateOnScroll>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
       {/* 5. DIFFERENTIATOR SECTION */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
