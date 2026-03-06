@@ -471,33 +471,38 @@ export default function LandingPage({ onNavigate }: { onNavigate?: (page: string
       {/* 4.5 AI KTP UPLOAD SECTION */}
       <section className="py-24 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             
-            <div className="flex-1 order-1">
+            <div className="flex-1 order-1 w-full">
               <AnimateOnScroll animation="fade-right" delay={100}>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                  Otomatisasi Isi Data KTP dengan AI
-                </h2>
-                <p className="text-lg text-slate-600 mb-6">
-                  Daftar akun pengajar jadi lebih mudah dan cepat. Cukup dengan mengunggah foto KTP Anda, teknologi Kecerdasan Buatan (AI) kami akan membaca dan mengisi kolom data diri secara otomatis ke dalam form.
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0">
-                      <Smartphone className="text-emerald-500" size={24} />
+                <div className="bg-white rounded-[2rem] p-8 lg:p-12 text-slate-800 shadow-xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden">
+                  
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
+                    Otomatisasi Isi Data KTP dengan AI
+                  </h2>
+                  <p className="text-lg text-slate-600 mb-8">
+                    Daftar akun pengajar jadi lebih mudah dan cepat. Cukup dengan mengunggah foto KTP Anda, teknologi Kecerdasan Buatan (AI) kami akan membaca dan mengisi kolom data diri secara otomatis ke dalam form.
+                  </p>
+                  
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-5 p-4 rounded-2xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100">
+                      <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-emerald-100">
+                        <Smartphone className="text-emerald-500" size={26} />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-lg">Upload Foto</h4>
+                        <p className="text-slate-500 mt-1">Ambil/unggah foto KTP Anda langsung dari perangkat Anda.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-slate-800">Upload Foto</h4>
-                      <p className="text-sm text-slate-600">Ambil/unggah foto KTP Anda langsung dari perangkat.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="text-blue-500" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-slate-800">Ekstraksi Pintar</h4>
-                      <p className="text-sm text-slate-600">Sistem AI mengenali NIK, Nama, dan data lainnya.</p>
+                    
+                    <div className="flex items-start gap-5 p-4 rounded-2xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100">
+                      <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-blue-100">
+                        <CheckCircle2 className="text-blue-500" size={26} />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-lg">Ekstraksi Pintar</h4>
+                        <p className="text-slate-500 mt-1">Sistem AI mengenali NIK, Nama, dan ekstraksi data lainnya.</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -506,7 +511,7 @@ export default function LandingPage({ onNavigate }: { onNavigate?: (page: string
 
             <div className="flex-1 order-2 w-full flex justify-center">
               <AnimateOnScroll animation="fade-left" delay={200}>
-                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-8 border-slate-50 bg-slate-100 max-w-[280px] lg:max-w-[320px] mx-auto">
+                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white bg-slate-100 max-w-[260px] lg:max-w-[300px] mx-auto transform hover:scale-105 transition-transform duration-500">
                   <video 
                     autoPlay 
                     loop 
