@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, Mail, Phone, Trash2, Edit2, Save, X } from 'lucide-react';
+import { Plus, Mail, Phone, Trash2, Edit2, Save, X, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import DeleteModal from '@/components/DeleteModal';
 import { toast } from 'sonner';
@@ -61,6 +61,7 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
   });
 
   const [isExtractingKTP, setIsExtractingKTP] = useState(false);
+  const [ktpPreview, setKtpPreview] = useState<string | null>(null);
 
   // Delete Modal State
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: 0, name: '' });
@@ -88,6 +89,7 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
 
   const handleOpenAdd = () => {
       setIsEditing(false);
+      setKtpPreview(null);
       setFormData({ 
         name: '', email: '', phone: '',
         nik: '', tempat_lahir: '', tanggal_lahir: '', jenis_kelamin: '', golongan_darah: '',
@@ -99,6 +101,7 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
 
   const handleOpenEdit = (teacher: Teacher) => {
       setIsEditing(true);
+      setKtpPreview(null);
       setCurrentTeacherId(teacher.id);
       setFormData({
           name: teacher.name,
@@ -149,6 +152,7 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
             setShowModal(false);
             fetchTeachers();
             setFormData({ name: '', email: '', phone: '' });
+            setKtpPreview(null);
         } else {
             toast.error(json.error || 'Gagal menyimpan data');
         }
@@ -192,53 +196,58 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
       return;
     }
 
+    // Set preview immediately
+    const objectUrl = URL.createObjectURL(file);
+    setKtpPreview(objectUrl);
     setIsExtractingKTP(true);
-    toast.info('Sedang membaca KTP...', { id: 'ktp-toast' });
 
-    try {
+    // Give UI time to update by pushing execution to the end of the callback queue
+    setTimeout(() => {
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64data = reader.result as string;
+        try {
+          const base64data = reader.result as string;
 
-        const res = await fetch('/api/extract-ktp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageBase64: base64data }),
-        });
+          const res = await fetch('/api/extract-ktp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ imageBase64: base64data }),
+          });
 
-        const json = await res.json();
-        if (json.success && json.data) {
-          toast.success('Berhasil membaca KTP!', { id: 'ktp-toast' });
-          const ktp = json.data;
-          setFormData((prev) => ({
-            ...prev,
-            nik: ktp.nik || prev.nik,
-            name: ktp.name || prev.name,
-            tempat_lahir: ktp.tempat_lahir || prev.tempat_lahir,
-            tanggal_lahir: ktp.tanggal_lahir || prev.tanggal_lahir,
-            jenis_kelamin: ktp.jenis_kelamin || prev.jenis_kelamin,
-            golongan_darah: ktp.golongan_darah || prev.golongan_darah,
-            alamat: ktp.alamat || prev.alamat,
-            rt_rw: ktp.rt_rw || prev.rt_rw,
-            kel_desa: ktp.kel_desa || prev.kel_desa,
-            kecamatan: ktp.kecamatan || prev.kecamatan,
-            agama: ktp.agama || prev.agama,
-            status_perkawinan: ktp.status_perkawinan || prev.status_perkawinan,
-            pekerjaan: ktp.pekerjaan || prev.pekerjaan,
-            kewarganegaraan: ktp.kewarganegaraan || prev.kewarganegaraan,
-          }));
-        } else {
-          throw new Error(json.error || 'Gagal mengekstrak data');
+          const json = await res.json();
+          if (json.success && json.data) {
+            toast.success('Berhasil membaca KTP!', { id: 'ktp-toast' });
+            const ktp = json.data;
+            setFormData((prev) => ({
+              ...prev,
+              nik: ktp.nik || prev.nik,
+              name: ktp.name || prev.name,
+              tempat_lahir: ktp.tempat_lahir || prev.tempat_lahir,
+              tanggal_lahir: ktp.tanggal_lahir || prev.tanggal_lahir,
+              jenis_kelamin: ktp.jenis_kelamin || prev.jenis_kelamin,
+              golongan_darah: ktp.golongan_darah || prev.golongan_darah,
+              alamat: ktp.alamat || prev.alamat,
+              rt_rw: ktp.rt_rw || prev.rt_rw,
+              kel_desa: ktp.kel_desa || prev.kel_desa,
+              kecamatan: ktp.kecamatan || prev.kecamatan,
+              agama: ktp.agama || prev.agama,
+              status_perkawinan: ktp.status_perkawinan || prev.status_perkawinan,
+              pekerjaan: ktp.pekerjaan || prev.pekerjaan,
+              kewarganegaraan: ktp.kewarganegaraan || prev.kewarganegaraan,
+            }));
+          } else {
+            throw new Error(json.error || 'Gagal mengekstrak data');
+          }
+        } catch (err: any) {
+          toast.error('Error: ' + err.message, { id: 'ktp-toast' });
+          console.error(err);
+        } finally {
+          setIsExtractingKTP(false);
+          e.target.value = ''; // Reset input
         }
       };
       reader.readAsDataURL(file);
-    } catch (err: any) {
-      toast.error('Error: ' + err.message, { id: 'ktp-toast' });
-      console.error(err);
-    } finally {
-      setIsExtractingKTP(false);
-      e.target.value = ''; // Reset input
-    }
+    }, 100);
   };
 
   return (
@@ -317,24 +326,51 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
                 <p className="text-sm font-bold text-emerald-800 mb-1">Pindai KTP (Otomatis Diisi AI)</p>
                 <p className="text-xs text-emerald-600 mb-4 px-2">Unggah foto KTP pengajar untuk memproses data NIK, Nama, Tanggal Lahir, dll secara otomatis.</p>
                   
-                {isExtractingKTP ? (
-                  <div className="w-full max-w-[220px] mx-auto mt-2 text-left">
-                    <div className="flex justify-between items-end mb-2">
-                       <span className="text-sm font-bold text-emerald-700 animate-pulse">Memproses Data AI...</span>
-                       <span className="text-xs text-emerald-500 font-medium">⏳ Mohon tunggu</span>
-                    </div>
-                    <div className="h-2.5 w-full bg-emerald-200 rounded-full overflow-hidden relative">
-                      <div className="absolute top-0 bottom-0 left-0 bg-emerald-500 rounded-full" 
-                           style={{ animation: 'indeterminateProgress 2s infinite ease-in-out' }}>
+                {ktpPreview ? (
+                  <div className="relative w-full max-w-[280px] mx-auto mt-2 rounded-xl overflow-hidden shadow-sm border border-emerald-200 h-[170px] bg-slate-100 group">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                      src={ktpPreview} 
+                      alt="KTP Preview" 
+                      className={`w-full h-full object-cover transition-all duration-500 ease-in-out ${isExtractingKTP ? 'blur-md brightness-[0.6] grayscale-[15%] scale-105' : ''}`}
+                    />
+                    
+                    {isExtractingKTP ? (
+                       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-slate-900/40 backdrop-blur-[2px]">
+                         <div className="relative w-20 h-20 flex items-center justify-center mb-3">
+                           {/* Outer glowing ring */}
+                           <div className="absolute inset-0 rounded-full border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                           
+                           {/* Outer spinning dash pattern */}
+                           <div className="absolute inset-2 rounded-full border-t-2 border-r-2 border-emerald-400 animate-[spin_1.5s_linear_infinite]"></div>
+                           
+                           {/* Inner spinning ring (opposite direction) */}
+                           <div className="absolute inset-4 rounded-full border-b-2 border-l-2 border-emerald-300 animate-[spin_1s_linear_infinite_reverse]"></div>
+                           
+                           {/* Center pulsating dot */}
+                           <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div>
+                         </div>
+                         
+                         <div className="flex flex-col items-center">
+                            <span className="text-emerald-300 font-bold text-sm tracking-widest uppercase animate-pulse drop-shadow-md">
+                              AI Scanning
+                            </span>
+                            <span className="text-white/80 text-[10px] font-medium mt-1">
+                              Membaca data KTP...
+                            </span>
+                         </div>
+                       </div>
+                    ) : (
+                      <div className="absolute top-2 right-2 flex gap-2">
+                        <button
+                          onClick={() => setKtpPreview(null)}
+                          className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95"
+                          title="Hapus / Ganti KTP"
+                        >
+                          <X size={14} strokeWidth={3} />
+                        </button>
                       </div>
-                    </div>
-                    <style dangerouslySetInnerHTML={{__html: `
-                      @keyframes indeterminateProgress {
-                        0% { width: 10%; transform: translateX(-10%); }
-                        50% { width: 50%; transform: translateX(50%); }
-                        100% { width: 10%; transform: translateX(250%); }
-                      }
-                    `}} />
+                    )}
                   </div>
                 ) : (
                   <label className="inline-flex cursor-pointer bg-white border border-emerald-300 hover:bg-emerald-100 text-emerald-700 px-5 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-colors items-center gap-2">
@@ -345,6 +381,7 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
                       accept="image/*" 
                       className="hidden" 
                       onChange={handleKTPUpload} 
+                      disabled={isExtractingKTP}
                     />
                   </label>
                 )}
@@ -537,6 +574,7 @@ export default function ManageTeachersPage({ onNavigate, currentUser }: ManageTe
         }
         isLoading={isDeleting}
       />
+
     </div>
   );
 }
